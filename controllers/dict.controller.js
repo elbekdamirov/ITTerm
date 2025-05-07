@@ -60,7 +60,15 @@ const remove = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const { term } = req.body;
+    // const { term } = req.body;
+
+    const { error, value } = dictValidation(req.body);
+
+    if (error) {
+      sendErrorResponse(error, res);
+    }
+
+    const { term } = value;
     const updatedItem = await Dict.findByIdAndUpdate(id, {
       term,
       letter: term[0],

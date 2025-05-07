@@ -22,18 +22,18 @@ exports.authorValidation = (body) => {
     photo: Joi.string().default("/author/avatar.png"),
     is_expert: Joi.boolean().default(false),
     is_active: Joi.boolean().default(false),
-    gender: Joi.string().valid("erkak", "ayol"),
-    birth_date: Joi.date().max("31-12-2000"),
-    port: Joi.number().port(),
-    birth_year: Joi.number().integer().max(2020),
-    referred: Joi.boolean(),
-    referredDetails: Joi.string().when("referred", {
-      is: true,
-      then: Joi.string().required(),
-      otherwise: Joi.string().optional(),
-    }),
-    colors: Joi.array().items(Joi.string(), Joi.number()),
-    is_yes: Joi.boolean().truthy("Yes", "Ha").valid(true),
+    // gender: Joi.string().valid("erkak", "ayol"),
+    // birth_date: Joi.date().max("31-12-2000"),
+    // port: Joi.number().port(),
+    // birth_year: Joi.number().integer().max(2020),
+    // referred: Joi.boolean(),
+    // referredDetails: Joi.string().when("referred", {
+    //   is: true,
+    //   then: Joi.string().required(),
+    //   otherwise: Joi.string().optional(),
+    // }),
+    // colors: Joi.array().items(Joi.string(), Joi.number()),
+    // is_yes: Joi.boolean().truthy("Yes", "Ha").valid(true),
   });
   return schema.validate(body, { abortEarly: false });
 };

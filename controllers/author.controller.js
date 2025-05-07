@@ -1,6 +1,5 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
 const Author = require("../schemas/Author");
-const Joi = require("joi");
 const { authorValidation } = require("../validation/author.validation.js");
 
 const create = async (req, res) => {
@@ -24,7 +23,7 @@ const getAll = async (req, res) => {
     limit = limit ? limit : 10;
     offset = offset ? offset : 1;
 
-    const data = await Dict.find({})
+    const data = await Author.find({})
       .limit(limit)
       .skip((offset - 1) * limit);
 
@@ -37,9 +36,9 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   try {
     const { id } = req.params;
-    const dict = await Dict.findById(id);
+    const author = await Author.findById(id);
 
-    res.status(200).send({ dict });
+    res.status(200).send({ author });
   } catch (error) {
     sendErrorResponse(error, res);
   }
@@ -48,9 +47,9 @@ const getOne = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedItem = await Dict.findByIdAndDelete(id);
+    const deletedItem = await Author.findByIdAndDelete(id);
 
-    res.status(200).send({ message: "Term deleted", deletedItem });
+    res.status(200).send({ message: "Author deleted", deletedItem });
   } catch (error) {
     sendErrorResponse(error, res);
   }
@@ -59,13 +58,16 @@ const remove = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const { term } = req.body;
-    const updatedItem = await Dict.findByIdAndUpdate(id, {
-      term,
-      letter: term[0],
-    });
 
-    res.status(200).send({ message: "Term updated", updatedItem });
+    const { error, value } = authorValidation(req.body);
+
+    if (error) {
+      sendErrorResponse(error, res);
+    }
+
+    const updatedItem = await Author.findByIdAndUpdate(id, value);
+
+    res.status(200).send({ message: "Author updated", updatedItem });
   } catch (error) {
     sendErrorResponse(error, res);
   }
