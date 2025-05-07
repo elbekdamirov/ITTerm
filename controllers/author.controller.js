@@ -1,19 +1,18 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
-const Dict = require("../schemas/Dict");
+const Author = require("../schemas/Author");
 const Joi = require("joi");
-const { dictValidation } = require("../validation/dict.validation");
+const { authorValidation } = require("../validation/author.validation.js");
 
 const create = async (req, res) => {
   try {
-    const { error, value } = dictValidation(req.body);
+    const { error, value } = authorValidation(req.body);
 
     if (error) {
       sendErrorResponse(error, res);
     }
 
-    const { term } = value;
-    const newDict = await Dict.create({ term, letter: term[0] });
-    res.status(201).send({ message: "New Term added", newDict });
+    const newAuthor = await Author.create(value);
+    res.status(201).send({ message: "New Author added", newAuthor });
   } catch (error) {
     return sendErrorResponse(error, res);
   }
