@@ -1,9 +1,16 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
 const Desc = require("../schemas/Desc");
+const { descValidation } = require("../validation/desc.validation");
 
 const create = async (req, res) => {
   try {
-    const newDesc = await Desc.create(req.body);
+    const { error, value } = descValidation(req.body);
+
+    if (error) {
+      sendErrorResponse(error, res);
+    }
+
+    const newDesc = await Desc.create(value);
     res.status(201).send({ message: "New Term added", newDesc });
   } catch (error) {
     sendErrorResponse(error, res);
@@ -52,7 +59,14 @@ const remove = async (req, res) => {
 const update = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedItem = await Desc.findByIdAndUpdate(id, req.body);
+
+    const { error, value } = descValidation(req.body);
+
+    if (error) {
+      sendErrorResponse(error, res);
+    }
+
+    const updatedItem = await Desc.findByIdAndUpdate(id, value);
 
     res.status(200).send({ message: "Description updated", updatedItem });
   } catch (error) {
