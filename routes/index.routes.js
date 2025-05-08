@@ -4,6 +4,9 @@ const descRouter = require("./desc.routes");
 const synonymsRouter = require("./synonyms.routes");
 const authorRouter = require("./author.routes");
 const socialRouter = require("./social.routes");
+const topicRouter = require("./topic.routes");
+const descTopicRouter = require("./desc_topic.routes");
+const tagRouter = require("./tag.routes");
 const router = require("express").Router();
 
 router.use("/dict", dictRouter);
@@ -12,5 +15,8 @@ router.use("/description", descRouter);
 router.use("/synonyms", synonymsRouter);
 router.use("/author", authorRouter);
 router.use("/social", socialRouter);
+router.use("/topic", topicRouter);
+router.use("/desc-topic", descTopicRouter);
+router.use("/tag", tagRouter);
 
 module.exports = router;
