@@ -4,14 +4,14 @@ const {
   getOne,
   remove,
   update,
-  loginAuthor,
-} = require("../controllers/author.controller.js");
+  login,
+} = require("../controllers/user.controller.js");
 
 const router = require("express").Router();
 
 router.post("/", create);
 router.get("/", getAll);
-router.post("/login", loginAuthor);
+router.post("/login", login);
 router.get("/:id", getOne);
 router.delete("/:id", remove);
 router.patch("/:id", update);

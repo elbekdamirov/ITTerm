@@ -15,9 +15,10 @@ exports.authorValidation = (body) => {
       .max(15)
       .message("Nick juda uzun"),
     email: Joi.string().email().lowercase(),
-    phone: Joi.string().pattern(/^(\+998)?[1-9][0-9]{8}$/),
+    phone: Joi.string(),
     password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
     repeat_password: Joi.ref("password"),
+    info: Joi.string(),
     position: Joi.string(),
     photo: Joi.string().default("/author/avatar.png"),
     is_expert: Joi.boolean().default(false),

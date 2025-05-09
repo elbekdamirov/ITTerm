@@ -1,43 +1,38 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
-const Author = require("../schemas/Author");
-const { authorValidation } = require("../validation/author.validation.js");
 const bcrypt = require("bcrypt");
+const Admin = require("../schemas/Admin");
 
 const create = async (req, res) => {
   try {
-    const { error, value } = authorValidation(req.body);
+    const data = req.body;
 
-    if (error) {
-      sendErrorResponse(error, res);
-    }
+    const hashedPassword = bcrypt.hashSync(data.password, 10);
 
-    const hashedPassword = bcrypt.hashSync(value.password, 7);
-
-    const newAuthor = await Author.create({
-      ...value,
+    const newAdmin = await Admin.create({
+      ...data,
       password: hashedPassword,
     });
-    res.status(201).send({ message: "New Author added", newAuthor });
+    res.status(201).send({ message: "New Admin added", newAdmin });
   } catch (error) {
     return sendErrorResponse(error, res);
   }
 };
 
-const loginAuthor = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const author = await Author.findOne({ email });
+    const admin = await Admin.findOne({ email });
 
-    if (!author) {
+    if (!admin) {
       return res.status(401).send({ message: "Email yoki password noto'g'ri" });
     }
-    const validPassword = bcrypt.compareSync(password, author.password);
+    const validPassword = bcrypt.compareSync(password, admin.password);
 
     if (!validPassword) {
       return res.status(401).send({ message: "Email yoki password noto'g'ri" });
     }
 
-    res.status(201).send({ message: "Tizimga xush kelibsiz", id: author.id });
+    res.status(201).send({ message: "Tizimga xush kelibsiz", id: admin.id });
   } catch (error) {
     return sendErrorResponse(error, res);
   }
@@ -49,7 +44,7 @@ const getAll = async (req, res) => {
     limit = limit ? limit : 10;
     offset = offset ? offset : 1;
 
-    const data = await Author.find({})
+    const data = await Admin.find({})
       .limit(limit)
       .skip((offset - 1) * limit);
 
@@ -62,9 +57,9 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   try {
     const { id } = req.params;
-    const author = await Author.findById(id);
+    const admin = await Admin.findById(id);
 
-    res.status(200).send({ author });
+    res.status(200).send({ admin });
   } catch (error) {
     sendErrorResponse(error, res);
   }
@@ -73,9 +68,9 @@ const getOne = async (req, res) => {
 const remove = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedItem = await Author.findByIdAndDelete(id);
+    const deletedItem = await Admin.findByIdAndDelete(id);
 
-    res.status(200).send({ message: "Author deleted", deletedItem });
+    res.status(200).send({ message: "Admin deleted", deletedItem });
   } catch (error) {
     sendErrorResponse(error, res);
   }
@@ -85,15 +80,9 @@ const update = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const { error, value } = authorValidation(req.body);
+    const updatedItem = await Admin.findByIdAndUpdate(id, req.body);
 
-    if (error) {
-      sendErrorResponse(error, res);
-    }
-
-    const updatedItem = await Author.findByIdAndUpdate(id, value);
-
-    res.status(200).send({ message: "Author updated", updatedItem });
+    res.status(200).send({ message: "Admin updated", updatedItem });
   } catch (error) {
     sendErrorResponse(error, res);
   }
@@ -105,5 +94,5 @@ module.exports = {
   getOne,
   remove,
   update,
-  loginAuthor,
+  login,
 };
