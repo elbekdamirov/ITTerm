@@ -2,6 +2,8 @@ const { sendErrorResponse } = require("../helpers/send_error_response");
 const Author = require("../schemas/Author");
 const { authorValidation } = require("../validation/author.validation.js");
 const bcrypt = require("bcrypt");
+const config = require("config");
+const jwt = require("jsonwebtoken");
 
 const create = async (req, res) => {
   try {
@@ -37,7 +39,20 @@ const loginAuthor = async (req, res) => {
       return res.status(401).send({ message: "Email yoki password noto'g'ri" });
     }
 
-    res.status(201).send({ message: "Tizimga xush kelibsiz", id: author.id });
+    const payload = {
+      id: author._id,
+      email: author.email,
+      is_active: author.is_active,
+      is_expert: author.is_expert,
+    };
+
+    const token = jwt.sign(payload, config.get("tokenKey"), {
+      expiresIn: config.get("tokenExpTime"),
+    });
+
+    res
+      .status(201)
+      .send({ message: "Tizimga xush kelibsiz", id: author.id, token });
   } catch (error) {
     return sendErrorResponse(error, res);
   }

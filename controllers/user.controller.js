@@ -1,6 +1,8 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
 const bcrypt = require("bcrypt");
 const User = require("../schemas/User");
+const config = require("config");
+const jwt = require("jsonwebtoken");
 
 const create = async (req, res) => {
   try {
@@ -32,7 +34,20 @@ const login = async (req, res) => {
       return res.status(401).send({ message: "Email yoki password noto'g'ri" });
     }
 
-    res.status(201).send({ message: "Tizimga xush kelibsiz", id: user.id });
+    const payload = {
+      id: user._id,
+      email: user.email,
+      is_active: user.is_active,
+      is_creator: user.is_creator,
+    };
+
+    const token = jwt.sign(payload, config.get("userTokenKey"), {
+      expiresIn: config.get("tokenExpTime"),
+    });
+
+    res
+      .status(201)
+      .send({ message: "Tizimga xush kelibsiz", id: admin.id, token });
   } catch (error) {
     return sendErrorResponse(error, res);
   }
