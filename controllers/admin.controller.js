@@ -2,8 +2,7 @@ const { sendErrorResponse } = require("../helpers/send_error_response");
 const bcrypt = require("bcrypt");
 const Admin = require("../schemas/Admin");
 const config = require("config");
-const jwt = require("jsonwebtoken");
-const jwtService = require("../services/jwt.service");
+const { adminJwtService } = require("../services/jwt.service");
 
 const create = async (req, res) => {
   try {
@@ -42,7 +41,7 @@ const login = async (req, res) => {
       is_creator: admin.is_creator,
     };
 
-    const tokens = jwtService.generateTokens(payload);
+    const tokens = adminJwtService.generateTokens(payload);
     admin.refresh_token = tokens.refreshToken;
     await admin.save();
 

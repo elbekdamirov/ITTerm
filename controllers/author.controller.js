@@ -1,6 +1,6 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
 const Author = require("../schemas/Author");
-const jwtService = require("../services/jwt.service.js");
+const { auhtorJwtService } = require("../services/jwt.service.js");
 const mailService = require("../services/mail.service.js");
 const { authorValidation } = require("../validation/author.validation.js");
 const bcrypt = require("bcrypt");
@@ -61,7 +61,7 @@ const loginAuthor = async (req, res) => {
     //   expiresIn: config.get("tokenExpTime"),
     // });
 
-    const tokens = jwtService.generateTokens(payload);
+    const tokens = auhtorJwtService.generateTokens(payload);
     author.refresh_token = tokens.refreshToken;
     await author.save();
 
@@ -189,7 +189,7 @@ const refreshAuthorToken = async (req, res) => {
         .send({ message: "Cookieda refresh token topilmadi" });
     }
 
-    await jwtService.verifyRefreshToken(refreshToken);
+    await auhtorJwtService.verifyRefreshToken(refreshToken);
 
     const author = await Author.findOne({ refresh_token: refreshToken });
 
@@ -204,7 +204,7 @@ const refreshAuthorToken = async (req, res) => {
       is_expert: author.is_expert,
     };
 
-    const tokens = jwtService.generateTokens(payload);
+    const tokens = auhtorJwtService.generateTokens(payload);
     author.refresh_token = tokens.refreshToken;
     await author.save();
 
@@ -227,7 +227,7 @@ const authorActivate = async (req, res) => {
   try {
     const { link } = req.params;
     const author = await Author.findOne({ activation_link: link });
-   
+
     if (!author) {
       return res.status(400).send({ message: "Avtor link noto'g'ri" });
     }
@@ -243,7 +243,6 @@ const authorActivate = async (req, res) => {
     sendErrorResponse(error, res);
   }
 };
-
 
 module.exports = {
   create,

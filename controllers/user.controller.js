@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../schemas/User");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-const jwtService = require("../services/jwt.service");
+const { userJwtService } = require("../services/jwt.service");
 
 const create = async (req, res) => {
   try {
@@ -42,7 +42,7 @@ const login = async (req, res) => {
       is_creator: user.is_creator,
     };
 
-    const tokens = jwtService.generateTokens(payload);
+    const tokens = userJwtService.generateTokens(payload);
     user.refresh_token = tokens.refreshToken;
     await user.save();
 
