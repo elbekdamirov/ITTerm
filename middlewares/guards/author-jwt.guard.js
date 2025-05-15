@@ -23,9 +23,9 @@ module.exports = async (req, res, next) => {
     // const decodedPayload = jwt.verify(token, config.get("tokenKey"));
     const decodedPayload = await jwtService.verifyAccessToken(token);
 
-    // if (!decodedPayload.is_active) {
-    //   return res.status(403).send({ msg: "Authorization header not found" });
-    // }
+    if (!decodedPayload.is_active) {
+      return res.status(403).send({ msg: "Active bolmagan foydalanuvchi" });
+    }
 
     req.author = decodedPayload;
 

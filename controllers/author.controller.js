@@ -1,10 +1,12 @@
 const { sendErrorResponse } = require("../helpers/send_error_response");
 const Author = require("../schemas/Author");
 const jwtService = require("../services/jwt.service.js");
+const mailService = require("../services/mail.service.js");
 const { authorValidation } = require("../validation/author.validation.js");
 const bcrypt = require("bcrypt");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const uuid = require("uuid");
 
 const create = async (req, res) => {
   try {
@@ -15,11 +17,19 @@ const create = async (req, res) => {
     }
 
     const hashedPassword = bcrypt.hashSync(value.password, 7);
-
+    const activation_link = uuid.v4();
     const newAuthor = await Author.create({
       ...value,
       password: hashedPassword,
+      activation_link,
     });
+
+    const link = `${config.get(
+      "api_url"
+    )}/api/author/activate/${activation_link}`;
+
+    await mailService.sendMail(value.email, link);
+
     res.status(201).send({ message: "New Author added", newAuthor });
   } catch (error) {
     return sendErrorResponse(error, res);
@@ -59,6 +69,19 @@ const loginAuthor = async (req, res) => {
       httpOnly: true,
       maxAge: config.get("cookie_refresh_time"),
     });
+
+    //====================== TEST UCHUN =========================//
+
+    // try {
+    //   setTimeout(function () {
+    //     throw new Error("UncaughtException example");
+    //   }, 1000);
+    // } catch (error) {}
+
+    // new Promise((_, reject) => {
+    //   reject(new Error("UnHandledRejection example"));
+    // });
+    //====================== TEST UCHUN =========================//
 
     res.status(201).send({
       message: "Tizimga xush kelibsiz",
@@ -156,6 +179,72 @@ const logoutAuthor = async (req, res) => {
   }
 };
 
+const refreshAuthorToken = async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return res
+        .status(400)
+        .send({ message: "Cookieda refresh token topilmadi" });
+    }
+
+    await jwtService.verifyRefreshToken(refreshToken);
+
+    const author = await Author.findOne({ refresh_token: refreshToken });
+
+    if (!author) {
+      return res.status(401).send({ message: "Refresh token topilmadi" });
+    }
+
+    const payload = {
+      id: author._id,
+      email: author.email,
+      is_active: author.is_active,
+      is_expert: author.is_expert,
+    };
+
+    const tokens = jwtService.generateTokens(payload);
+    author.refresh_token = tokens.refreshToken;
+    await author.save();
+
+    res.cookie("refreshToken", tokens.refreshToken, {
+      httpOnly: true,
+      maxAge: config.get("cookie_refresh_time"),
+    });
+
+    res.status(201).send({
+      message: "Tokenlar yangilandi",
+      id: author.id,
+      accessToken: tokens.accessToken,
+    });
+  } catch (error) {
+    return sendErrorResponse(error, res);
+  }
+};
+
+const authorActivate = async (req, res) => {
+  try {
+    const { link } = req.params;
+    const author = await Author.findOne({ activation_link: link });
+   
+    if (!author) {
+      return res.status(400).send({ message: "Avtor link noto'g'ri" });
+    }
+
+    if (author.is_active) {
+      return res.status(400).send({ message: "Avtor avval faollashtirilgan" });
+    }
+
+    author.is_active = true;
+    await author.save();
+    res.send({ message: "Avtor faollashtirildi" });
+  } catch (error) {
+    sendErrorResponse(error, res);
+  }
+};
+
+
 module.exports = {
   create,
   getAll,
@@ -164,4 +253,6 @@ module.exports = {
   update,
   loginAuthor,
   logoutAuthor,
+  refreshAuthorToken,
+  authorActivate,
 };
