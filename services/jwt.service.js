@@ -40,17 +40,17 @@ let auhtorJwtService = new JwtService(
 );
 
 let adminJwtService = new JwtService(
-  config.get("access_key"),
-  config.get("refresh_key"),
-  config.get("access_time"),
-  config.get("refresh_time")
+  config.get("adminAccess_key"),
+  config.get("adminRefresh_key"),
+  config.get("adminAccess_time"),
+  config.get("adminRefresh_time")
 );
 
 let userJwtService = new JwtService(
-  config.get("access_key"),
-  config.get("refresh_key"),
-  config.get("access_time"),
-  config.get("refresh_time")
+  config.get("userAccess_key"),
+  config.get("userRefresh_key"),
+  config.get("userAccess_time"),
+  config.get("userRefresh_time")
 );
 
 module.exports = {

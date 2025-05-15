@@ -47,7 +47,7 @@ const login = async (req, res) => {
 
     res.cookie("refreshToken", tokens.refreshToken, {
       httpOnly: true,
-      maxAge: config.get("cookie_refresh_time"),
+      maxAge: config.get("admin_cookie_refresh_time"),
     });
 
     res.status(201).send({
