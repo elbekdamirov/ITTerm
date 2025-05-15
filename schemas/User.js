@@ -10,6 +10,7 @@ const userSchema = new Schema(
     created_date: { type: Date },
     updated_date: { type: Date },
     is_active: { type: Boolean },
+    refresh_token: { type: String },
   },
   {
     versionKey: false,

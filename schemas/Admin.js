@@ -10,6 +10,7 @@ const adminSchema = new Schema(
     is_creator: { type: Boolean },
     created_date: { type: Date },
     updated_date: { type: Date },
+    refresh_token: { type: String },
   },
   {
     versionKey: false,

@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const User = require("../schemas/User");
 const config = require("config");
 const jwt = require("jsonwebtoken");
+const jwtService = require("../services/jwt.service");
 
 const create = async (req, res) => {
   try {
@@ -41,13 +42,20 @@ const login = async (req, res) => {
       is_creator: user.is_creator,
     };
 
-    const token = jwt.sign(payload, config.get("userTokenKey"), {
-      expiresIn: config.get("tokenExpTime"),
+    const tokens = jwtService.generateTokens(payload);
+    user.refresh_token = tokens.refreshToken;
+    await user.save();
+
+    res.cookie("refreshToken", tokens.refreshToken, {
+      httpOnly: true,
+      maxAge: config.get("cookie_refresh_time"),
     });
 
-    res
-      .status(201)
-      .send({ message: "Tizimga xush kelibsiz", id: admin.id, token });
+    res.status(201).send({
+      message: "Tizimga xush kelibsiz",
+      id: user.id,
+      accessToken: tokens.accessToken,
+    });
   } catch (error) {
     return sendErrorResponse(error, res);
   }
@@ -103,6 +111,33 @@ const update = async (req, res) => {
   }
 };
 
+const logoutUser = async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return res
+        .status(400)
+        .send({ message: "Cookieda refresh token topilmadi" });
+    }
+
+    const user = await User.findOneAndUpdate(
+      { refresh_token: refreshToken },
+      { refresh_token: "" },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(400).send({ message: "Token noto'g'ri" });
+    }
+
+    res.clearCookie("refreshToken");
+    res.send({ user });
+  } catch (error) {
+    return sendErrorResponse(error, res);
+  }
+};
+
 module.exports = {
   create,
   getAll,
@@ -110,4 +145,5 @@ module.exports = {
   remove,
   update,
   login,
+  logoutUser,
 };
