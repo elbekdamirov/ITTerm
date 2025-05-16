@@ -1,6 +1,6 @@
 const { sendErrorResponse } = require("../../helpers/send_error_response");
 const jwt = require("jsonwebtoken");
-const jwtService = require("../../services/jwt.service");
+const { authorJwtService } = require("../../services/jwt.service");
 
 module.exports = async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
     }
 
     // const decodedPayload = jwt.verify(token, config.get("tokenKey"));
-    const decodedPayload = await jwtService.verifyAccessToken(token);
+    const decodedPayload = await authorJwtService.verifyAccessToken(token);
 
     if (!decodedPayload.is_active) {
       return res.status(403).send({ msg: "Active bolmagan foydalanuvchi" });

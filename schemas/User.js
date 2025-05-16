@@ -11,6 +11,7 @@ const userSchema = new Schema(
     updated_date: { type: Date },
     is_active: { type: Boolean },
     refresh_token: { type: String },
+    activation_link: { type: String },
   },
   {
     versionKey: false,

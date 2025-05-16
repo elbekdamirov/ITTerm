@@ -45,4 +45,10 @@ class MailService {
   }
 }
 
-module.exports = new MailService();
+let authorMailService = new MailService();
+let userMailService = new MailService();
+
+module.exports = {
+  authorMailService,
+  userMailService,
+};
