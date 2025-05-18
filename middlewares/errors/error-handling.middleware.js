@@ -1,8 +1,9 @@
 const ApiError = require("../../error/ApiError");
+const logger = require("../../services/logger.service");
 
 module.exports = function (err, req, res, next) {
   console.log(err);
-
+  logger.error(err);
   if (err instanceof ApiError) {
     return res.status(err.status).send({ message: err.message });
   }
