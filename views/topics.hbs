@@ -1,0 +1,17 @@
+<h1 style="text-align: center;">{{title}}</h1>
+
+<div class="container" style="display:flex; gap:15px">
+  {{#each topics}}
+
+    <div class="card" style="width: 18rem;">
+      <img
+        src="https://img.freepik.com/premium-vector/topic-text-effects_241344-102.jpg"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <p class="card-text">{{text}}</p>
+      </div>
+    </div>
+  {{/each}}
+</div>

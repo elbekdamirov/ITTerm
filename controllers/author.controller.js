@@ -83,7 +83,7 @@ const loginAuthor = async (req, res) => {
     // });
     //====================== TEST UCHUN =========================//
 
-    res.status(201).send({
+    res.status(200).send({
       message: "Tizimga xush kelibsiz",
       id: author.id,
       accessToken: tokens.accessToken,

@@ -4,13 +4,13 @@ const { topicValidation } = require("../validation/topic.validation");
 
 const create = async (req, res) => {
   try {
-    const { error, value } = topicValidation(req.body);
+    // const { error, value } = topicValidation(req.body);
 
-    if (error) {
-      sendErrorResponse(error, res);
-    }
+    // if (error) {
+    //   sendErrorResponse(error, res);
+    // }
 
-    const newTopic = await Topic.create(value);
+    const newTopic = await Topic.create(req.body);
     res.status(201).send({ message: "New Topic added", newTopic });
   } catch (error) {
     return sendErrorResponse(error, res);

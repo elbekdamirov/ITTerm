@@ -1,0 +1,66 @@
+2025-05-19T10:23:54.542Z [ITTERM] error: unhandledRejection: The "paths[0]" argument must be of type string. Received undefined
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at Object.resolve (node:path:199:9)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:103:29)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:9:12)
+    at ExpressHandlebars.getTemplate (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:102:16)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:144:22)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+2025-05-19T10:23:55.374Z [ITTERM] error: unhandledRejection: The "paths[0]" argument must be of type string. Received undefined
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at Object.resolve (node:path:199:9)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:103:29)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:9:12)
+    at ExpressHandlebars.getTemplate (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:102:16)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:144:22)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+2025-05-19T10:30:08.998Z [ITTERM] error: unhandledRejection: The "paths[0]" argument must be of type string. Received undefined
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at Object.resolve (node:path:199:9)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:103:29)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:9:12)
+    at ExpressHandlebars.getTemplate (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:102:16)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:144:22)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+2025-05-19T10:54:49.244Z [ITTERM] error: unhandledRejection: The "paths[0]" argument must be of type string. Received undefined
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at Object.resolve (node:path:199:9)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:103:29)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:9:12)
+    at ExpressHandlebars.getTemplate (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:102:16)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:144:22)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+2025-05-19T10:54:50.103Z [ITTERM] error: unhandledRejection: The "paths[0]" argument must be of type string. Received undefined
+TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+    at Object.resolve (node:path:199:9)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:103:29)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+    at new Promise (<anonymous>)
+    at __awaiter (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:9:12)
+    at ExpressHandlebars.getTemplate (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:102:16)
+    at ExpressHandlebars.<anonymous> (D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:144:22)
+    at Generator.next (<anonymous>)
+    at D:\Dasturlash\Result\NodeJs\ITTERM\node_modules\express-handlebars\dist\express-handlebars.js:13:71
+2025-05-19T13:05:07.224Z [ITTERM] error: Cannot set headers after they are sent to the client
+2025-05-19T13:10:53.967Z [ITTERM] error: Parse error on line 8:
+...</div><p>{{JSON.stringify(topics)}}<
+---------------------^
+Expecting 'ID', got 'INVALID'
+2025-05-19T13:30:50.726Z [ITTERM] error: text is not defined

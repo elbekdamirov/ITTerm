@@ -1,0 +1,21 @@
+<h3>Authors</h3>
+
+<div class="container" style="display:flex; gap:15px">
+  {{#each authors}}
+
+    <div class="card" style="width: 18rem;">
+      <img
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="card-body">
+        <p class="card-text">{{first_name}}</p>
+        <p>{{last_name}}</p>
+        <p>{{email}}</p>
+        <p>{{info}}</p>
+        <p>{{position}}</p>
+      </div>
+    </div>
+  {{/each}}
+</div>
