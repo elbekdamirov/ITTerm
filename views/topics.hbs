@@ -1,8 +1,29 @@
 <h1 style="text-align: center;">{{title}}</h1>
 
-<div class="container" style="display:flex; gap:15px">
-  {{#each topics}}
+<div class="container" id="container" style="display:flex; gap:15px">
+</div>
 
+<script>
+  const container = document.getElementById("container")
+
+
+  async function getTopics() {
+    let accessToken = localStorage.getItem("access_token")
+  try {
+    let response = await fetch("http://localhost:3333/api/topic", {
+      method:"GET",
+      headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    })
+
+    let {data} = await response.json()
+    console.log(data)
+
+    let topics = ""
+    data.forEach((val)=>{
+      topics+=`
     <div class="card" style="width: 18rem;">
       <img
         src="https://img.freepik.com/premium-vector/topic-text-effects_241344-102.jpg"
@@ -10,8 +31,18 @@
         alt="..."
       />
       <div class="card-body">
-        <p class="card-text">{{text}}</p>
+        <p class="card-text">${val.text}</p>
+        <button class="btn ${val.is_checked ? 'btn-success' : 'btn-danger'}"> ${val.is_checked ? "Active" : "Passive"}</button>
       </div>
-    </div>
-  {{/each}}
-</div>
+    </div>`
+    })
+    container.innerHTML = topics
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+getTopics()
+
+</script>

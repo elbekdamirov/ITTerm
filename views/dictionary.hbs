@@ -1,8 +1,29 @@
-<h3>Dictionaries</h3>
+<h1 style="text-align: center;">{{title}}</h1>
 
-<div class="container" style="display:flex; gap:15px">
-  {{#each dicts}}
+<div class="container" id="container" style="display:flex; gap:15px">
+</div>
 
+<script>
+  const container = document.getElementById("container")
+
+
+  async function getDict() {
+    let accessToken = localStorage.getItem("access_token")
+  try {
+    let response = await fetch("http://localhost:3333/api/dict", {
+      method:"GET",
+      headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    })
+
+    let {data} = await response.json()
+    console.log(data)
+
+    let dict = ""
+    data.forEach((val)=>{
+      dict+=`
     <div class="card" style="width: 18rem;">
       <img
         src="https://store-images.microsoft.com/image/apps.39779.9007199266244944.8d6e8dd3-539b-4a02-bc83-1655cc7c19db.429d3005-0b1d-4600-803e-792e95ec381a?h=210"
@@ -10,8 +31,22 @@
         alt="..."
       />
       <div class="card-body">
-        <p class="card-text">{{term}}</p>
+        <p class="card-text">${val.term}</p>
+        <button class="btn ${val.is_checked ? 'btn-success' : 'btn-danger'}"> ${val.is_checked ? "Active" : "Passive"}</button>
       </div>
-    </div>
-  {{/each}}
-</div>
+    </div>`
+    })
+    container.innerHTML = dict
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+getDict()
+
+</script>
+
+
+
+
